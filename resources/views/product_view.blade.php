@@ -24,7 +24,7 @@
     </div>
 <div class="col-md-12">
 
-    <form method="post" action="{{$prod_id->id}}/store">
+    <form method="post" action="{{url('home/'.$prod_id->cat_id.'/'.$prod_id->id.'/store')}}">
         {{csrf_field()}}
         <div class="form-group"  >
             <label >write somesing...</label>

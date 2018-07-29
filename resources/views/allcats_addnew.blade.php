@@ -8,16 +8,17 @@
             @foreach($cats as $cat)
 
                 <td>
-                    <a href="home/{{$cat->id}}">{{$cat->cat_name}}</a>
+                    <a href="home/{{Auth::user()->id}}/{{$cat->id}}">{{$cat->cat_name}}</a>
 
                 </td>
 
-
+@if(Auth::user())
                 <td>
                     <a href="categorystore/{{$cat->id}}/delete" class="btn btn-danger ">Delete</a>
                 </td>
                 <td>
                     <a href="categorystore/{{$cat->id}}/upform" class="btn btn-primary ">update</a>
+                    @endif
                 </td>
         </tr>
 
@@ -25,16 +26,17 @@
         </tbody>
     </table>
 
+    @if(Auth::user())
     <div class="form-group" mr  >
         <form method="post" action="categorystore/add">
             {{csrf_field()}}
-            <label for="formGroupExampleInput">Example label</label>
+            <label for="formGroupExampleInput">ADD New Category</label>
             <input type="text" name="cat_name" class="form-control" id="formGroupExampleInput">
             <button type="submit" class="btn btn-primary">ADD</button>
 
         </form>
     </div>
-
+@endif
 
 
 

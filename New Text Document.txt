@@ -1,0 +1,43 @@
+ //$cart_id=Cart::find($id);
+     //   $user->user_id=$user->id;
+       // $user->prod_id=$request->prod_id;
+        //$user->qnt=1;
+        //$user->save();
+        //$usercart=Cart::where('user_id',$usid)->with('user')->first();
+        //if($usercart->id ==$cart_id->id) {
+           // $usercart->products->prod_id = $request->prod_id;
+            //$usercart->products->cart_id = $cart_id->id;
+         //   $cartid->qnt=1;
+            //$usercart->save();
+          //  $usercart->products()->attach([$cart_id->id,$request->prod_id]);
+        //}
+         //else {
+           // $cart = new Cart();
+             //$cart->user_id = $user->id;
+             //$cart->products->prod_id = $request->prod_id;
+             //$cart->qnt = 1;
+             //$cart->save();
+             //$cart->products()->attach($usercart);
+
+         //}
+     //   $carts=Cart::where('prod_id',$product->id)->get();
+       // $p=Product::find($product->id);
+
+        /*$carts=Cart::where('user_id',$user->id)->get(['id']);
+        foreach ($carts as $cart)
+
+            if($user->id==$cart->user_id)
+
+        {
+            $cart->user_id=$user->id;
+            $cart->products->prod_id=$request;
+            $cart->qnt=1;
+            $cart->save();
+
+        }
+        else
+        //$carts=new Cart ;
+        $carts->products->user_id=$user->id;
+        $carts->products->prod_id=$request->prod_id;
+        $carts->products->qnt=1;
+        $carts->products->save();*/

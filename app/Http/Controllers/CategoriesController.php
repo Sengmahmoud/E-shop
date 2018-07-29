@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Product;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class CategoriesController extends Controller
 {
     public function show()
     {   $cats=Category::all();
         $prods=Product::all();
-        return view('home',compact('cats','prods'));
+       // if(Auth::user())
+        //$carts=Cart::where('user_id',Auth::user()->id)->get(['id']);
+
+        return view('home',compact('cats','prods','carts'));
     }
-    public function onecategory(Category $category)
+    public function showauth($usid)
+    {   $cats=Category::all();
+        $prods=Product::all();
+        //if(Auth::user())
+            $user=Cart::where('user_id',$usid)->with('user')->first();
+           // foreach ($user->cart as $us)
+       if($user!=null)
+                $carid=$user->id;
+
+
+
+        return view('home',compact('cats','prods','carts','carid'));
+    }
+    public function onecategory($usid,Category $category)
     {
+        $id=User::find($usid);
         return view('one_category',compact('category'));
     }
 
@@ -31,9 +51,22 @@ class CategoriesController extends Controller
     }
     public function delete(Category $id)
     {
-        $id->delete();
-        return back();
+        if(count($id->products))
+        {
+            return view('delete_all',compact('id'));
+        }
+        else {
+            $id->delete();
+            return back();
+        }
     }
+    public function deleteAll(Category $id)
+    {
+                 $id->delete();
+                 $id->products()->delete();
+            return redirect('../../categorystore');
+        }
+
     public  function upform(Category $id)
     {
         return view('update_cats',compact('id'));
