@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable=['id','name'];
+   // protected $table='categories';
     public function categories()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Category','cat_id');
     }
     public function carts()
     {

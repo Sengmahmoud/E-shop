@@ -1,0 +1,17 @@
+<!--@if(Auth::user())
+<table class="table">
+    <form method="post" action="../productstore/{{$category->id}}/add" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="<?php //cho csrf_token(); ?>">
+        <tr><td>name:</td><td> <input name="prod_name" placeholder="product name" /></td></tr>
+        <tr><td>img: </td><td><input type="file" name="prod_img" /></td></tr>
+
+
+        <tr><td>price:  </td><td><input name="prod_price" placeholder="product price" /></td></tr>
+        <tr><td>quantity:  </td><td><input name="prod_qunt" placeholder="product quantity" /></td></tr>
+        <tr><td colspan="2"><button type="submit" class="btn btn-success btn-lg">Add</button></td></tr>
+
+    </form>
+</table>
+    @endif
+    @stop
+    -->

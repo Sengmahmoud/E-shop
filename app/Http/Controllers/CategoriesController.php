@@ -11,49 +11,70 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class CategoriesController extends Controller
 {
-    public function show()
-    {   $cats=Category::all();
+ 
+ 
+
+
+   
+    public function showauth(User $usid)
+    {   $categ=Category::all();
         $prods=Product::all();
-       // if(Auth::user())
-        //$carts=Cart::where('user_id',Auth::user()->id)->get(['id']);
+        $cart_products = auth()->user()->cart->products;
+       
 
-        return view('home',compact('cats','prods','carts'));
+        return view('home',compact('categ','prods','carts','usid','cart_products'));
     }
-    public function showauth($usid)
-    {   $cats=Category::all();
-        $prods=Product::all();
-        //if(Auth::user())
-            $user=Cart::where('user_id',$usid)->with('user')->first();
-           // foreach ($user->cart as $us)
-       if($user!=null)
-                $carid=$user->id;
-
-
-
-        return view('home',compact('cats','prods','carts','carid'));
-    }
-    public function onecategory($usid,Category $category)
+    public function onecategory(Category $category)
     {
-        $id=User::find($usid);
-        return view('one_category',compact('category'));
+
+        $categ=Category::all();
+        if (Auth::user()) {
+              $cart_products = auth()->user()->cart->products;
+         }
+         else
+            $cart_products=null;
+    //    $id=User::find($usid);
+        return view('admin.categories.one_category',compact('category','categ','cart_products'));
     }
 
     public function cat_show()
     {   $cats=Category::all();
-            return view('allcats_addnew',compact('cats'));
+
+        $categ=Category::all();
+        if (Auth::user()) {
+              $cart_products = auth()->user()->cart->products;
+         }
+         else
+            $cart_products=null;
+            return view('admin.categories.allcats_addnew',compact('cats','categ','cart_products'));
     }
+
+    public function addform()//to create new category
+    {
+         $categ=Category::all();
+        if (Auth::user()) {
+              $cart_products = auth()->user()->cart->products;
+         }
+         else
+            $cart_products=null;
+        return view('admin.categories.create',compact('categ','cart_products'));
+    }
+
+
+
+
     public function store(Request $request)
     {
         $cats=new Category;
         $cats->cat_name=$request->cat_name;
         $cats->save();
-        return back();
+      return redirect('admin');
     }
     public function delete(Category $id)
     {
         if(count($id->products))
         {
-            return view('delete_all',compact('id'));
+            return view('admin.categories.delete_all',compact('id'));
         }
         else {
             $id->delete();
@@ -64,16 +85,22 @@ class CategoriesController extends Controller
     {
                  $id->delete();
                  $id->products()->delete();
-            return redirect('../../categorystore');
+            return redirect('../../admin');
         }
 
     public  function upform(Category $id)
     {
-        return view('update_cats',compact('id'));
+        $categ=Category::all();
+        if (Auth::user()) {
+              $cart_products = auth()->user()->cart->products;
+         }
+         else
+            $cart_products=null;
+        return view('admin.categories.update_cats',compact('id','categ','cart_products'));
     }
     public function update(Request $request,Category $id)
     {
         $id->update($request->all());
-       return redirect('home');
+       return redirect('admin');
     }
 }

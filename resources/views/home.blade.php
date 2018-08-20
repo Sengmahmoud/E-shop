@@ -1,62 +1,85 @@
-@extends('master')
+@extends('fronts.master')
+@section('style')
 
-
-@section('cart')
-@if(Auth::user())
-@if($carid !=null)
-
-    <a class="dropdown-item"  href="../cartview/{{Auth::user()->id}}/{{$carid}}" ><i class="fa fa-search-plus"  ></i> Quick view</a>
-
-    @endif
-
-@endif
 @endsection
+@section('title')
+    Product
+@endsection
+@section('breadcrumb')
+    Product
+@endsection
+@section('container')
+<div class="container">
+    <!-- row -->
+    <div class="row">
 
-@section('cat')
-    @foreach($cats as $cat)
-        <div class="col-md-3">
-            <div class="thumbnail">
-                <a class="btn btn-primary" href="productstore/{{$cat->id}}">{{$cat->cat_name}}</a>
 
-            </div>
-            <br>
-        </div>
+        <!-- MAIN -->
+        <div id="main" class="">
 
-    @endforeach
-    @endsection
-@section('content')
-    @foreach($prods as $prod)
-        <div class="col-md-3" style="padding: 2%">
-            <div class="thumbnail">
-           <div>
-                <img src="../images/{{$prod->prod_img}}" width="200" height="200">
-           </div>
 
-            <div style="padding: 2%">
-                <a class="btn btn-primary" href="../{{$prod->cat_id}}/{{$prod->id}}" >{{$prod->prod_name}}</a>
-            </div>
-                @if(Auth::user())
-                <div style="padding: 2%">
-
-                <form method=" any" action="{{url('cartview/'.Auth::user()->id .'/'.$carid.'/add')}}" >
+            <!-- STORE -->
+            <div id="">
+                <!-- row -->
+                <div class="row">
+                    @foreach($prods as $product)
+                    <!-- Product Single -->
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="product product-single">
+                            <div class="product-thumb">
+                                <div class="product-label">
+                                    <span>New</span>
+                                    <span class="sale">-20%</span>
+                                </div>
+                                <a href="{{url($product->cat_id.'/'.$product->id)}}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                                <img src="{{asset('images/'.$product->prod_img)}}" alt="">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-price">{{$product->prod_price}} <del class="product-old-price">$45.00</del></h3>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o empty"></i>
+                                </div>
+                                <h2 class="product-name"><a href="../{{$product->cat_id}}/{{$product->id}}">{{$product->prod_name}}</a></h2>
+                               @if(Auth::user())
+                                <div class="product-btns">
+                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                    <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                   
+                                      <form method=" any" action="{{url('cartview/'.Auth::user()->id .'/'.auth()->user()->cart->id.'/add')}}" >
                     {{csrf_field()}}
-                    <input type="hidden" name="id" value="{{$prod->id}}" />
+                    <input type="hidden" name="id" value="{{$product->id}}" />
 
                     <input type="submit" class="btn btn-success" value="add to cart" />
                 </form>
 
+                                
+
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Product Single -->
+
+                    @endforeach
                 </div>
-                @endif
-                <h3>{{$prod->prod_price}} $</h3>
-
+                <!-- /row -->
             </div>
+            <!-- /STORE -->
+
+            <!-- store bottom filter -->
+
+            <!-- /store bottom filter -->
         </div>
-
-    @endforeach
-
-
-
+        <!-- /MAIN -->
+    </div>
+    <!-- /row -->
+</div>
 @stop
+@section('js')
 
-
-
+@endsection

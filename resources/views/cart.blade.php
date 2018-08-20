@@ -1,6 +1,19 @@
-@extends('master')
-@section('content')
+@extends('fronts.master')
+@section('style')
 
+@endsection
+@section('title')
+    Product
+@endsection
+@section('breadcrumb')
+    Product
+@endsection
+@section('container')
+ <div class="row">
+
+
+            <!-- MAIN -->
+            <div id="main" class="">
 
 <div class= "col-md-12">
 	  <table class="table table-dark" >
@@ -47,4 +60,9 @@
           
        
          </div>
-    @stop
+       </div>
+     </div>
+   @stop
+@section('js')
+
+@endsection

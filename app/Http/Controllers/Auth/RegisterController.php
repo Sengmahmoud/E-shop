@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Cart;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +30,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+  /*  
+*/
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -63,10 +67,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        //add role
+   $user->roles()->attach(Role::Where('name','user')->first());
+
+//to create cart for new user automatcally after registeration
+     Cart::create([
+        'user_id'=>$user->id
+        ,'qnt'=>1
+
+    ]);
+     return $user;
+
+        
     }
+
 }

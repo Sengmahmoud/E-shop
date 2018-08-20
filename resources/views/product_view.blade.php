@@ -1,6 +1,14 @@
-@extends('master')
-@section('content')
+@extends('fronts.master')
+@section('style')
 
+@endsection
+@section('title')
+    Product Details
+@endsection
+@section('breadcrumb')
+    Product Details
+@endsection
+@section('container')
 
     <div class="col-md-12 img">
         <img class="img-responsive center-block img-thumbnail"
@@ -45,3 +53,6 @@
 
 
     @stop
+    @section('js')
+
+@endsection

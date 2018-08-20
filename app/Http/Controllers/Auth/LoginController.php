@@ -41,7 +41,7 @@ class LoginController extends Controller
     protected function authenticated()
     {
         if(auth()->check())
-        return redirect('/home/'.Auth::user()->id);
+        return redirect('home/'.auth()->user()->id);
         else
             return redirect('/');
     }
